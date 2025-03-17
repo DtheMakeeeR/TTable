@@ -1,6 +1,10 @@
 #pragma once
+#include <iostream>
+using namespace std;
 template <class TKey, class TVal>
 struct Record {
-	Tkey key;
-	Tval val;
+	TKey key;
+	TVal val;
+	Record() {};
+	Record(const TKey k, const TVal v) : key(k), val(v) {}
 };
