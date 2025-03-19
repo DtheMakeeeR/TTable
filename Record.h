@@ -5,6 +5,9 @@ template <class TKey, class TVal>
 struct Record {
 	TKey key;
 	TVal val;
+
 	Record() {};
 	Record(const TKey k, const TVal v) : key(k), val(v) {}
+
+	bool operator<(Record<TKey, TVal> r) { return key < r.key; };
 };

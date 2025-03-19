@@ -27,6 +27,9 @@
     <ClInclude Include="TScanTable.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="TSortTable.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

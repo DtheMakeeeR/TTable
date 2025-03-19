@@ -23,6 +23,7 @@ bool TScanTable<TKey, TVal>::Find(TKey k)
 template<class TKey, class TVal>
 void TScanTable<TKey, TVal>::Insert(TKey k, TVal v)
 {
+	if (dataCount == size) throw - 1;
 	if (Find(k)) throw - 1;
 	Record<TKey, TVal> r(k, v);
 	pRec[curr] = r;
@@ -30,8 +31,9 @@ void TScanTable<TKey, TVal>::Insert(TKey k, TVal v)
 }
 
 template<class TKey, class TVal>
-inline void TScanTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
+void TScanTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
 {
+	if (dataCount == size) throw - 1;
 	if (Find(rec.key)) throw - 1;
 	pRec[curr] = rec;
 	dataCount++;
