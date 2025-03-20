@@ -20,8 +20,9 @@ void TSortTable<TKey, TVal>::QSortRec(int s, int f)
 {
 	if (s == f) return;
 	int left = s, right = f;
-	Record<TKey, TVal> k = pRec[(left+right)/2];
-	while (left < right) {
+	int index = (left + right) / 2;
+	Record<TKey, TVal> k = pRec[index];
+	while (left <= right) {
 		while (pRec[left] < k) left++;
 		while (k < pRec[right]) right--;
 		if (left <= right) {
@@ -31,13 +32,16 @@ void TSortTable<TKey, TVal>::QSortRec(int s, int f)
 			left++; right--;
 		}
 	}
-	QSortRec(s, (s+f)/2);//if (s < left) 
-	QSortRec((s+f)/2 + 1, f);//if (right < f) 
+	cout << endl << "s: " << s << " f: " << f << endl;
+	cout << *this << endl;
+	if (s < right ) QSortRec(s, right);//if (s < left)       (s + f) / 2
+	if (left < f) QSortRec(left, f);//if (right < f)    (s + f) / 2 + 1
 }
 
 template<class TKey, class TVal>
 bool TSortTable<TKey, TVal>::Find(TKey k)
 {
+	eff = 0;
 	int s = 0, f = dataCount;
 	while (s < f) {
 		eff++;

@@ -13,6 +13,7 @@ public:
 template<class TKey, class TVal>
 bool TScanTable<TKey, TVal>::Find(TKey k)
 {
+	eff = 0;
 	for (Reset(); !(IsEnd()); GoNext()) {
 		eff++;
 		if (GetCurrKey() == k) return true;
