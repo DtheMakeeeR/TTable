@@ -32,6 +32,7 @@ public:
 };
 template <class TKey, class TVal>
 ostream& operator<<(ostream& out, TTable<TKey, TVal>& t) {
+	out << "key - val" << endl;
 	for (t.Reset(); !t.IsEnd(); t.GoNext()) {
 		out << t.GetCurrKey() << " - " << t.GetCurrVal() << endl;
 	}

@@ -32,8 +32,8 @@ void TSortTable<TKey, TVal>::QSortRec(int s, int f)
 			left++; right--;
 		}
 	}
-	cout << endl << "s: " << s << " f: " << f << endl;
-	cout << *this << endl;
+	//cout << endl << "s: " << s << " f: " << f << endl;
+	//cout << *this << endl;
 	if (s < right ) QSortRec(s, right);
 	if (left < f) QSortRec(left, f);
 }

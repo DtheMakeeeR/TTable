@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayHashTable.h" />
+    <ClInclude Include="HashTable.h" />
     <ClInclude Include="Record.h" />
     <ClInclude Include="TArrayTable.h" />
     <ClInclude Include="TScanTable.h" />
