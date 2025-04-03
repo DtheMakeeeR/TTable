@@ -2,15 +2,21 @@
 #include "TSortTable.h"
 #include "ArrayHashTable.h"
 void main() {
-	ArrayHashTable<int, int> hashT(100);
-	for (int i = 0; i < 30; i++)
-	{
-		hashT.Insert(i * 10, i);
-	}
-	cout << "*** hashT ***" << endl << hashT << endl;
-	for (int i = 0; i < 10; i++)
-	{
-		hashT.Delete(i * 30);
-	}
-	cout << "*** hashT ***" << endl << hashT << endl;
+	/*TScanTable<int, int> scanT(10);
+	scanT.Insert(50);
+	scanT.Insert(40);
+	scanT.Insert(45);
+	scanT.Insert(-2);
+	scanT.Insert(-1000);
+	TSortTable<int, int> sortT = scanT;
+	cout << sortT;*/
+	TScanTable<int, std::string> table(10);
+	table.Insert(Record<int, std::string>(9, "Lesha Tsydenov"));
+	table.Insert(Record<int, std::string>(2, "Namsarai Baltahinov"));
+	table.Insert(Record<int, std::string>(3, "Dorzhi Zandakov"));
+	table.Insert(Record<int, std::string>(-6, "Bato Batuevich"));
+	table.Insert(Record<int, std::string>(5, "Zhargal Shushkevich"));
+
+	TSortTable<int, std::string> tableSort(table, SortType::MergeSort);
+	cout << tableSort;
 }

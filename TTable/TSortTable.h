@@ -1,18 +1,25 @@
 #pragma once
 #include "TScanTable.h"
+enum SortType {
+	MergeSort,
+	QuickSort
+};
 template<class TKey, class TVal>
 class TSortTable : public TScanTable<TKey, TVal> {
 private:
+	Record<TKey, TVal>* tmpArr;
 	void QSortRec(int s, int f);
+	void Merge(int left, int mid, int right);
 public:
 	TSortTable(int sz = 10) : TScanTable<TKey, TVal>(sz) {}
-	TSortTable(const TScanTable<TKey, TVal>& t) : TScanTable<TKey, TVal>(t) { QSort(); }
+	TSortTable(const TScanTable<TKey, TVal>& t, SortType type = QuickSort);
 	virtual bool Find(TKey k);
 	virtual void Insert(TKey k, TVal v); 
 	virtual void Insert(Record<TKey, TVal> rec);
 	virtual void Delete(TKey k);
 	void SelectSort();
 	void QSort() { QSortRec(0, dataCount - 1); };
+	void MSort(int l, int r);
 };
 
 template<class TKey, class TVal>
@@ -36,6 +43,32 @@ void TSortTable<TKey, TVal>::QSortRec(int s, int f)
 	//cout << *this << endl;
 	if (s < right ) QSortRec(s, right);
 	if (left < f) QSortRec(left, f);
+}
+
+template<class TKey, class TVal>
+void TSortTable<TKey, TVal>::Merge(int left, int mid, int right)
+{
+	int i = left, j = mid + 1, k = left;
+	while (i <= mid && j <= right)
+	{
+		if (pRec[i] < pRec[j]) tmpArr[k++] = pRec[i++];
+		else tmpArr[k++] = pRec[j++];
+	}
+	if (i <= mid) while (i <= mid) tmpArr[k++] = pRec[i++];
+	else while (j <= right) tmpArr[k++] = pRec[j++];
+	for (i = left; i <= right; i++) pRec[i] = tmpArr[i];
+}
+
+template<class TKey, class TVal>
+TSortTable<TKey, TVal>::TSortTable(const TScanTable<TKey, TVal>& t, SortType type): TScanTable<TKey, TVal>(t)
+{
+	if (type == MergeSort)
+	{
+		tmpArr = new Record<TKey, TVal>[size];
+		MSort(0, dataCount - 1);
+		//delete tmpArr;
+	}
+	if (type == QuickSort) QSort();
 }
 
 template<class TKey, class TVal>
@@ -110,4 +143,14 @@ void TSortTable<TKey, TVal>::SelectSort()
 		pRec[i] = tmp;
 		i++;
 	}
+}
+
+template<class TKey, class TVal>
+void TSortTable<TKey, TVal>::MSort(int l, int r)
+{
+	if (l == r) return;
+	int m = (l + r) / 2;
+	MSort(l, m);
+	MSort(m + 1, r);
+	Merge(l, m, r);
 }
