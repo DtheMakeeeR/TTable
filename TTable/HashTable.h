@@ -7,7 +7,7 @@ protected:
 	int size;
 	virtual int HashFunc(TKey k);
 public:
-	HashTable(int sz = 10) {}
+	HashTable(int sz = 10) : size(sz) {}
 };
 
 template<class TKey, class TVal>

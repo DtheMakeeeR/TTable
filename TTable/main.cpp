@@ -1,6 +1,7 @@
 #include "TScanTable.h"
 #include "TSortTable.h"
 #include "ArrayHashTable.h"
+#include"ListHashTable.h"
 void main() {
 	/*TScanTable<int, int> scanT(10);
 	scanT.Insert(50);
@@ -10,13 +11,14 @@ void main() {
 	scanT.Insert(-1000);
 	TSortTable<int, int> sortT = scanT;
 	cout << sortT;*/
-	TScanTable<int, std::string> table(10);
+	ListHashTable<int, std::string> table(10);
 	table.Insert(Record<int, std::string>(9, "Lesha Tsydenov"));
 	table.Insert(Record<int, std::string>(2, "Namsarai Baltahinov"));
 	table.Insert(Record<int, std::string>(3, "Dorzhi Zandakov"));
-	table.Insert(Record<int, std::string>(-6, "Bato Batuevich"));
+	table.Insert(Record<int, std::string>(6, "Bato Batuevich"));
 	table.Insert(Record<int, std::string>(5, "Zhargal Shushkevich"));
 
-	TSortTable<int, std::string> tableSort(table, SortType::MergeSort);
-	cout << tableSort;
+	//TSortTable<int, std::string> tableSort(table, SortType::MergeSort);
+	std::cout << table;
+	//ListHashTable<int, int> lht;
 }

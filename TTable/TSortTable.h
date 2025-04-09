@@ -2,7 +2,8 @@
 #include "TScanTable.h"
 enum SortType {
 	MergeSort,
-	QuickSort
+	QuickSort,
+	SelectSort
 };
 template<class TKey, class TVal>
 class TSortTable : public TScanTable<TKey, TVal> {
@@ -30,17 +31,24 @@ void TSortTable<TKey, TVal>::QSortRec(int s, int f)
 	int index = (left + right) / 2;
 	Record<TKey, TVal> k = pRec[index];
 	while (left <= right) {
-		while (pRec[left] < k) left++;
-		while (k < pRec[right]) right--;
+		while (pRec[left] < k)
+		{
+			eff++;
+			left++;
+		}
+		while (k < pRec[right])
+		{
+			eff++;
+			right--;
+		}
 		if (left <= right) {
 			Record<TKey, TVal> tmp = pRec[left];
 			pRec[left] = pRec[right];
 			pRec[right] = tmp;
 			left++; right--;
+			eff++;
 		}
 	}
-	//cout << endl << "s: " << s << " f: " << f << endl;
-	//cout << *this << endl;
 	if (s < right ) QSortRec(s, right);
 	if (left < f) QSortRec(left, f);
 }
@@ -53,10 +61,22 @@ void TSortTable<TKey, TVal>::Merge(int left, int mid, int right)
 	{
 		if (pRec[i] < pRec[j]) tmpArr[k++] = pRec[i++];
 		else tmpArr[k++] = pRec[j++];
+		eff++;
 	}
-	if (i <= mid) while (i <= mid) tmpArr[k++] = pRec[i++];
-	else while (j <= right) tmpArr[k++] = pRec[j++];
-	for (i = left; i <= right; i++) pRec[i] = tmpArr[i];
+	if (i <= mid) while (i <= mid)
+	{
+		eff++;
+		tmpArr[k++] = pRec[i++];
+	}
+	else while (j <= right) 
+	{
+		eff++;
+		tmpArr[k++] = pRec[j++];
+	}
+	for (i = left; i <= right; i++) {
+		eff++;
+		pRec[i] = tmpArr[i];
+	}
 }
 
 template<class TKey, class TVal>
@@ -68,7 +88,9 @@ TSortTable<TKey, TVal>::TSortTable(const TScanTable<TKey, TVal>& t, SortType typ
 		MSort(0, dataCount - 1);
 		//delete tmpArr;
 	}
-	if (type == QuickSort) QSort();
+	else if (type == QuickSort) QSort();
+	else SelectSort();
+	tmpArr = nullptr;
 }
 
 template<class TKey, class TVal>
@@ -130,12 +152,14 @@ void TSortTable<TKey, TVal>::Delete(TKey k)
 template<class TKey, class TVal>
 void TSortTable<TKey, TVal>::SelectSort()
 {
+	eff = 0;
 	int i = 0, j = 0;
 	while (i < dataCount - 1) {
 		j = i;
 		int min = j;
 		while (j < dataCount) {
 			if (pRec[j].key < pRec[min].key) min = j;
+			eff++;
 			j++;
 		}
 		Record<TKey, TVal> tmp = pRec[min];

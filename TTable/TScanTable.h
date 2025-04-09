@@ -4,12 +4,21 @@ template <class TKey, class TVal>
 class TScanTable : public TArrayTable<TKey, TVal> {
 public:
 	TScanTable(int sz = 10) : TArrayTable<TKey, TVal>(sz) {}
+	TScanTable(const TScanTable<TKey, TVal>& t) : TArrayTable<TKey, TVal>(t) {}
 	virtual bool Find(TKey k);
 	virtual void Insert(TKey k, TVal v);
 	virtual void Insert(Record<TKey, TVal> rec);
 	virtual void Delete(TKey k);
+	TScanTable<TKey, TVal>& operator=(const TScanTable<TKey, TVal> t);
 };
 
+template<class TKey, class TVal>
+TScanTable<TKey, TVal>& TScanTable<TKey, TVal>:: operator=(const TScanTable<TKey, TVal> t)
+{
+	if (this == &t) return *this;
+	TArrayTable<TKey, TVal>::operator=(t);
+	return *this;
+}
 template<class TKey, class TVal>
 bool TScanTable<TKey, TVal>::Find(TKey k)
 {
@@ -43,5 +52,7 @@ void TScanTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
 template<class TKey, class TVal>
 void TScanTable<TKey, TVal>::Delete(TKey k)
 {
-	if (Find(k)) this->pRec[this->curr] = this->pRec[(this->dataCount)--];
+	if (!Find(k)) throw - 1;
+	pRec[this->curr] = pRec[(this->dataCount)--];
+	dataCount--;
 }

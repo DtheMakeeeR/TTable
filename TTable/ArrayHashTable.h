@@ -26,14 +26,25 @@ public:
 	Record<TKey, TVal> GetCurrRec() { return pRec[curr]; }
 	~ArrayHashTable() { delete pRec; }
 
-private:
-
+	ArrayHashTable<TKey, TVal>& operator=(const ArrayHashTable<TKey, TVal>& t);
 };
 
 template<class TKey, class TVal>
-ArrayHashTable<TKey, TVal>::ArrayHashTable(int sz)
+ArrayHashTable<TKey, TVal>& ArrayHashTable<TKey, TVal>::operator=(const ArrayHashTable<TKey, TVal>& t)
 {
-	size = sz;
+	if (this == &t) return *this;
+	if (size != t.size)
+	{
+		delete pRec;
+		pRec = new Record<TKey, TVal>[size];
+	}
+	dataCount = t.dataCount;
+	for (int i = 0; i < size; i++) pRec[i] = t.pRec[i];
+}
+template<class TKey, class TVal>
+ArrayHashTable<TKey, TVal>::ArrayHashTable(int sz) : HashTable<TKey, TVal>(sz)
+{
+	step = 1;
 	for (int i = 2; i * i < size; i++) {
 		if (sz % i != 0) 
 		{
@@ -72,6 +83,7 @@ bool ArrayHashTable<TKey, TVal>::Find(TKey key)
 template<class TKey, class TVal>
 void ArrayHashTable<TKey, TVal>::Insert(TKey key, TVal val)
 {
+	if (dataCount == size) throw - 1;
 	eff = 0;
 	if (Find(key)) throw - 1;
 	Record<TKey, TVal> tmp(key, val);
@@ -94,6 +106,7 @@ void ArrayHashTable<TKey, TVal>::Delete(TKey key)
 	eff = 0;
 	if (!Find(key)) throw - 1;
 	pRec[curr] = deleted;
+	dataCount--;
 }
 
 template<class TKey, class TVal>

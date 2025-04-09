@@ -18,6 +18,8 @@ public:
 	void Reset() { curr = 0; };
 	void GoNext() { curr++; };
 	bool IsEnd() { return curr == dataCount; }
+
+	TArrayTable<TKey, TVal>& operator=(const TArrayTable<TKey, TVal>& t);
 };
 
 template<class TKey, class TVal>
@@ -40,4 +42,18 @@ TArrayTable<TKey, TVal>::TArrayTable(const TArrayTable<TKey, TVal>& t)
 	{
 		pRec[i] = t.pRec[i];
 	}
+}
+
+template<class TKey, class TVal>
+TArrayTable<TKey, TVal>& TArrayTable<TKey, TVal>::operator=(const TArrayTable<TKey, TVal>& t)
+{
+	if (this == &t) return *this;
+	if (size != t.size)
+	{
+		delete pRec;
+		pRec = new Record<TKey, TVal>[size];
+	}
+	dataCount = t.dataCount;
+	for (int i = 0; i < size; i++) pRec[i] = t.pRec[i];
+	return *this;
 }

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0fee49f8-b29e-400d-ad29-f5ecd2d489c8}</ProjectGuid>
-    <RootNamespace>TTable</RootNamespace>
+    <ProjectGuid>{773863ea-ed1f-45a3-94c7-7fa8b6015f67}</ProjectGuid>
+    <RootNamespace>ConsoleModel</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,17 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ArrayHashTable.h" />
-    <ClInclude Include="HashTable.h" />
-    <ClInclude Include="ListHashTable.h" />
-    <ClInclude Include="Record.h" />
-    <ClInclude Include="TArrayTable.h" />
-    <ClInclude Include="TScanTable.h" />
-    <ClInclude Include="TSortTable.h" />
-    <ClInclude Include="TTable.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ConsoleModel.cpp" />
+    <ClCompile Include="Model.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

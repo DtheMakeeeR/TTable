@@ -1,7 +1,6 @@
 #pragma once
 #include "Record.h"
 #include <iostream>
-using namespace std;
 template <class TKey, class TVal>
 class TTable {
 protected:
