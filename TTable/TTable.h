@@ -20,6 +20,7 @@ public:
 	virtual void Insert(TKey key, TVal val) = 0;
 	virtual void Insert(Record<TKey, TVal> rec) = 0;
 	virtual void Delete(TKey key) = 0;
+	virtual void Clear() = 0;
 	//*****************************ศาละภาฮะ
 	virtual void Reset() = 0;
 	virtual void GoNext() = 0;

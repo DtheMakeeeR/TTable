@@ -13,12 +13,14 @@ public:
 	TVal GetCurrVal() { return pRec[curr].val; }
 	Record<TKey, TVal> GetCurrRec() { return pRec[curr]; }
 
+	void Clear() { dataCount = 0; }
+
 	bool IsFull() const { return dataCount == size; }
 	bool IsEmpty() { return size == 0; }
 	void Reset() { curr = 0; };
 	void GoNext() { curr++; };
 	bool IsEnd() { return curr == dataCount; }
-
+	
 	TArrayTable<TKey, TVal>& operator=(const TArrayTable<TKey, TVal>& t);
 
 	~TArrayTable() { delete[] pRec; }

@@ -11,7 +11,7 @@ void main() {
 	scanT.Insert(-1000);
 	TSortTable<int, int> sortT = scanT;
 	cout << sortT;*/
-	TScanTable<int, std::string> table(10);
+	TSortTable<int, std::string> table(10);
 	table.Insert(Record<int, std::string>(9, "Lesha Tsydenov"));
 	std::cout << table.GetEff() << endl;
 	table.Insert(Record<int, std::string>(2, "Namsarai Baltahinov"));
@@ -27,5 +27,8 @@ void main() {
 
 	//TSortTable<int, std::string> tableSort(table, SortType::MergeSort);
 	std::cout << table;
+	table.Clear();
+	std::cout << table;
+
 	//ListHashTable<int, int> lht;
 }

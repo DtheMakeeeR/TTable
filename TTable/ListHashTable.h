@@ -15,7 +15,8 @@ public:
 	void Insert(TKey key, TVal val);
 	void Insert(Record<TKey, TVal> rec);
 	void Delete(TKey key);
-	
+	void Clear();
+
 	bool IsFull() const;
 	void Reset();
 	void GoNext();
@@ -60,6 +61,7 @@ void ListHashTable<TKey, TVal>::Insert(TKey key, TVal val)
 template<class TKey, class TVal>
 void ListHashTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
 {
+	if (dataCount == size - 1) throw - 1;
 	if (Find(rec.key)) throw - 1;
 	pList[currList].push_front(rec);
 	dataCount++;
@@ -69,10 +71,18 @@ void ListHashTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
 template<class TKey, class TVal>
 void ListHashTable<TKey, TVal>::Delete(TKey key)
 {
+	if (dataCount == 0) throw - 1;
 	if (!Find(key)) throw - 1;
 	pList[currList].erase(currI);
 	dataCount--;
 	eff++;
+}
+
+template<class TKey, class TVal>
+void ListHashTable<TKey, TVal>::Clear()
+{
+	dataCount = 0;
+	for (int i = 0; i < size; i++) pList[i].clear();
 }
 
 template<class TKey, class TVal>

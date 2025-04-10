@@ -16,6 +16,7 @@ public:
 	void Insert(TKey key, TVal val);
 	void Insert(Record<TKey, TVal> rec);
 	void Delete(TKey key);
+	void Clear();
 
 	void Reset();
 	void GoNext();
@@ -107,6 +108,13 @@ void ArrayHashTable<TKey, TVal>::Delete(TKey key)
 	if (!Find(key)) throw - 1;
 	pRec[curr] = deleted;
 	dataCount--;
+}
+
+template<class TKey, class TVal>
+void ArrayHashTable<TKey, TVal>::Clear()
+{
+	dataCount = 0;
+	for (int i = 0; i < size; i++) pRec[i] = empty;
 }
 
 template<class TKey, class TVal>

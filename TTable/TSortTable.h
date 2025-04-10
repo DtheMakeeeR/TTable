@@ -97,9 +97,10 @@ template<class TKey, class TVal>
 bool TSortTable<TKey, TVal>::Find(TKey k)
 {
 	eff = 0;
-	int s = 0, f = dataCount;
-	while (s < f) {
-		eff++;
+	int s = 0, f = dataCount-1;
+
+	while (s <= f) {
+		eff++;;
 		int ind = (s + f) / 2;
 		if (pRec[ind].key > k) f = ind - 1;
 		else if (pRec[ind].key < k) s = ind + 1;
