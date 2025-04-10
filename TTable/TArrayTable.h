@@ -20,6 +20,8 @@ public:
 	bool IsEnd() { return curr == dataCount; }
 
 	TArrayTable<TKey, TVal>& operator=(const TArrayTable<TKey, TVal>& t);
+
+	~TArrayTable() { delete[] pRec; }
 };
 
 template<class TKey, class TVal>

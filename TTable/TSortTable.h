@@ -86,7 +86,7 @@ TSortTable<TKey, TVal>::TSortTable(const TScanTable<TKey, TVal>& t, SortType typ
 	{
 		tmpArr = new Record<TKey, TVal>[size];
 		MSort(0, dataCount - 1);
-		//delete tmpArr;
+		delete[] tmpArr;
 	}
 	else if (type == QuickSort) QSort();
 	else SelectSort();

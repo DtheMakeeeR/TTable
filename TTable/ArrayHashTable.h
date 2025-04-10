@@ -24,7 +24,7 @@ public:
 	TKey GetCurrKey() { return pRec[curr].key; };
 	TVal GetCurrVal() { return pRec[curr].val; }
 	Record<TKey, TVal> GetCurrRec() { return pRec[curr]; }
-	~ArrayHashTable() { delete pRec; }
+	~ArrayHashTable() { delete[] pRec; }
 
 	ArrayHashTable<TKey, TVal>& operator=(const ArrayHashTable<TKey, TVal>& t);
 };

@@ -6,7 +6,7 @@ template <class TKey, class TVal>
 class ListHashTable : public HashTable<TKey, TVal>
 {
 protected:
-	int currList, currEl;
+	int currList;
 	std::list <Record<TKey, TVal>>* pList;
 	typename std::list<Record<TKey, TVal>>::iterator currI;
 public:
@@ -23,6 +23,8 @@ public:
 	TKey GetCurrKey() { return currI->key; }
 	TVal GetCurrVal() { return currI->val; }
 	Record<TKey, TVal> GetCurrRec() { return *currI; }
+
+	~ListHashTable() { delete[] pList; }
 };
 
 template<class TKey, class TVal>
