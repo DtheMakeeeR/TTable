@@ -16,7 +16,7 @@ void main() {
 	std::cout << table.GetEff() << endl;
 	table.Insert(Record<int, std::string>(2, "Namsarai Baltahinov"));
 	std::cout << table.GetEff() << endl;
-	table.Insert(Record<int, std::string>(12, "Namsarai Baltahinov"));
+	table.Insert(Record<int, std::string>(12222, "Namsarai Baltahinov"));
 	std::cout << table.GetEff() << endl;
 	table.Insert(Record<int, std::string>(3, "Dorzhi Zandakov"));
 	std::cout << table.GetEff() << endl;
