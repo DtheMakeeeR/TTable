@@ -173,7 +173,7 @@ void TSortTable<TKey, TVal>::SelectSort()
 template<class TKey, class TVal>
 void TSortTable<TKey, TVal>::MSort(int l, int r)
 {
-	if (l == r) return;
+	if (l >= r) return;
 	int m = (l + r) / 2;
 	MSort(l, m);
 	MSort(m + 1, r);
