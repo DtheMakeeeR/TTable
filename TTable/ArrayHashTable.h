@@ -85,11 +85,11 @@ template<class TKey, class TVal>
 void ArrayHashTable<TKey, TVal>::Insert(TKey key, TVal val)
 {
 	if (dataCount == size) throw - 1;
-	eff = 0;
 	if (Find(key)) throw - 1;
 	Record<TKey, TVal> tmp(key, val);
 	pRec[curr] = tmp;
 	dataCount++;
+	eff++;
 }
 
 template<class TKey, class TVal>
@@ -99,6 +99,7 @@ void ArrayHashTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
 	if (Find(rec.key)) throw - 1;
 	pRec[curr] = rec;
 	dataCount++;
+	eff++;
 }
 
 template<class TKey, class TVal>
@@ -108,6 +109,7 @@ void ArrayHashTable<TKey, TVal>::Delete(TKey key)
 	if (!Find(key)) throw - 1;
 	pRec[curr] = deleted;
 	dataCount--;
+	eff++;
 }
 
 template<class TKey, class TVal>

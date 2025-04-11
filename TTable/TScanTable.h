@@ -22,7 +22,7 @@ TScanTable<TKey, TVal>& TScanTable<TKey, TVal>:: operator=(const TScanTable<TKey
 template<class TKey, class TVal>
 bool TScanTable<TKey, TVal>::Find(TKey k)
 {
-	eff = 0;
+	eff = 1;
 	for (Reset(); !(IsEnd()); GoNext()) {
 		eff++;
 		if (GetCurrKey() == k) return true;
@@ -38,6 +38,7 @@ void TScanTable<TKey, TVal>::Insert(TKey k, TVal v)
 	Record<TKey, TVal> r(k, v);
 	pRec[curr] = r;
 	dataCount++;
+	eff++;
 }
 
 template<class TKey, class TVal>
@@ -47,6 +48,7 @@ void TScanTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
 	if (Find(rec.key)) throw - 1;
 	pRec[curr] = rec;
 	dataCount++;
+	eff++;
 }
 
 template<class TKey, class TVal>
@@ -55,4 +57,5 @@ void TScanTable<TKey, TVal>::Delete(TKey k)
 	if (!Find(k)) throw - 1;
 	pRec[this->curr] = pRec[(this->dataCount)--];
 	dataCount--;
+	eff++;
 }

@@ -96,7 +96,7 @@ TSortTable<TKey, TVal>::TSortTable(const TScanTable<TKey, TVal>& t, SortType typ
 template<class TKey, class TVal>
 bool TSortTable<TKey, TVal>::Find(TKey k)
 {
-	eff = 0;
+	eff = 1;
 	int s = 0, f = dataCount-1;
 
 	while (s <= f) {
@@ -118,9 +118,14 @@ void TSortTable<TKey, TVal>::Insert(TKey k, TVal v)
 {
 	if (dataCount == size) throw - 1;
 	if (Find(k)) throw - 1;
-	for (size_t i = dataCount; i > curr; i--) pRec[i] = pRec[i - 1]; 
+	for (size_t i = dataCount; i > curr; i--)
+	{
+		eff++;
+		pRec[i] = pRec[i - 1];
+	}
 	pRec[curr].key = k; pRec[curr].val = v;
 	dataCount++;
+	eff++;
 }
 
 template<class TKey, class TVal>
@@ -135,6 +140,7 @@ void TSortTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
 	}
 	pRec[curr] = rec;
 	dataCount++;
+	eff++;
 }
 
 template<class TKey, class TVal>
@@ -148,6 +154,7 @@ void TSortTable<TKey, TVal>::Delete(TKey k)
 		pRec[i] = pRec[i + 1];
 	}
 	dataCount--;
+	eff++;
 }
 
 template<class TKey, class TVal>

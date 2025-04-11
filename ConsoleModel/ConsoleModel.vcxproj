@@ -131,6 +131,14 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Model.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TTable\TTable.vcxproj">
+      <Project>{0fee49f8-b29e-400d-ad29-f5ecd2d489c8}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="x64\Debug\SortTable.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
