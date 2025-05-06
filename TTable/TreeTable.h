@@ -2,6 +2,8 @@
 #include "Record.h"
 #include "TTable.h"
 #include <stack>
+#include <vector>
+const int BAL_OK = 0; const int BAL_LEFT = -1; const int BAL_RIGHT = 1;
 template <class TKey, class TVal>
 struct TreeNode
 {
@@ -9,7 +11,9 @@ struct TreeNode
 	TreeNode* pLeft, *pRight;
 	int bal;
 public:
-	TreeNode(TKey k, TVal v) : rec(k, v), pLeft(nullptr), pRight(nullptr) {}
+	TreeNode(TKey k, TVal v) : rec(k, v), pLeft(nullptr), pRight(nullptr), bal(BAL_OK) {}
+	bool operator<(TreeNode<TKey, TVal> r) { return rec.key < r.rec.key; };
+    bool operator==(TreeNode<TKey, TVal> r) { return rec.key == r.rec.key; };
 };
 template <class TKey, class TVal>
 class TreeTable : public TTable<TKey, TVal>
@@ -22,8 +26,8 @@ public:
 	TreeTable() : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr), pos(0), level(0) {};
 
 	bool Find(TKey key);
-	void Insert(TKey key, TVal val);
-    void Insert(Record<TKey, TVal> rec);
+	virtual void Insert(TKey key, TVal val);
+    virtual void Insert(Record<TKey, TVal> rec);
     void Delete(TKey key);
     bool IsFull() const;
     void Clear();
@@ -197,16 +201,28 @@ bool TreeTable<TKey, TVal>::IsFull() const
 template<class TKey, class TVal>
 void TreeTable<TKey, TVal>::Clear()
 {
+    vector < TreeNode<TKey, TVal>*> toDel;
     int sz = dataCount, i = 0;
     for (Reset(); i < sz; GoNext(), i++)
     {
-        delete pCurr;//не  работает, потому что сразу удаляет корень (´･_･｀)
-        
+        //delete pCurr;//не  работает, потому что сразу удаляет корень (´･_･｀)
+        toDel.push_back(pCurr);
     }
+    for (i = 0; i < sz; i++)
+    {
+        delete toDel[i];
+    }
+    pCurr = nullptr;
+    pPrev = nullptr;
+    pRoot = nullptr;
+    dataCount = 0;
+    pos = 0;
 }
 
 template<class TKey, class TVal>
 void TreeTable<TKey, TVal>::Reset() {
+    pos = 0;
+    if (IsEnd()) return;
     pCurr = pRoot;
     while (!st.empty()) {
         st.pop();
@@ -238,7 +254,7 @@ void TreeTable<TKey, TVal> ::GoNext() {
 }
 template<class TKey, class TVal>
 bool TreeTable<TKey, TVal>::IsEnd() {
-    return pos == dataCount;
+    return pos >= dataCount;
 }
 template<class TKey, class TVal>
 void TreeTable<TKey, TVal>::PrintRec(ostream& os, TreeNode<TKey, TVal>* p) {
@@ -248,7 +264,7 @@ void TreeTable<TKey, TVal>::PrintRec(ostream& os, TreeNode<TKey, TVal>* p) {
     for (int i = 0; i < level; i++) {
         os << " ";
     }
-    os << p->rec.key << endl;
+    os << level << " level: " << p->rec.key << endl;
     level++;
     PrintRec(os, p->pRight);
     PrintRec(os, p->pLeft);

@@ -3,7 +3,8 @@
 void Model::Update(string message)
 {
     system("cls");
-    cout << "Items count: " << tablesSize << endl;
+    cout << "Tables sizes: " << tablesSize << endl;
+    cout << "Items in tables: " << tablesItems << endl;
     cout << "Errors: " << errCount << endl;
     cout << "Efficiencies: " << endl;
     cout << "ScanTable: " << tables[0]->GetEff() << endl;
@@ -11,7 +12,7 @@ void Model::Update(string message)
     cout << "ArrayHashTable: " << tables[2]->GetEff() << endl;
     cout << "ListHashTable: " << tables[3]->GetEff() << endl;
     cout << "Choose operation:" << endl;
-    cout << "1: Create tables(size, border)" << endl;
+    cout << "1: Create tables(size, count, border)" << endl;
     cout << "2: Insert item" << endl;
     cout << "3: Delete item" << endl;
     cout << "4: Find item" << endl;
@@ -30,14 +31,17 @@ void Model::Insert(int key, int val)
     {
         tables[i]->Insert(key, val);
     }
+    tablesItems++;
 }
 
-void Model::Find(int key)
+bool Model::Find(int key)
 {
+    bool res = true;
     for (size_t i = 0; i < tableCount; i++)
     {
-        tables[i]->Find(key);
+        res = res&&(tables[i]->Find(key));
     }
+    return res;
 }
 
 void Model::Delete(int key)
@@ -46,6 +50,7 @@ void Model::Delete(int key)
     {
         tables[i]->Delete(key);
     }
+    tablesItems--;
 }
 
 void Model::Clear()
@@ -59,12 +64,12 @@ void Model::Clear()
 void Model::InsertMany(int count, int border)
 {
     int r;
-    for (int i = 0; i < count; i++)
+    while(tablesItems < border && tablesItems < count)
     {
         r = Random(border);
         try
         {
-            Insert(r, i);
+            Insert(r, r);
         }
         catch (...)
         {
@@ -93,15 +98,21 @@ void Model::CheckSorts(int size, int border)
     TSortTable<int, int> selectSort(scan, SortType::SelectSort);
     TSortTable<int, int> quickSort(scan, SortType::QuickSort);
     TSortTable<int, int> mergeSort(scan, SortType::MergeSort);
+    TSortTable<int, int> insertSort;
+    for (scan.Reset(); !scan.IsEnd(); scan.GoNext())
+    {
+        insertSort.Insert(scan.GetCurrRec());
+    }
     std::cout << "select sort eff: " << selectSort.GetEff() << std::endl;
     std::cout << "quick sort eff: " << quickSort.GetEff() << std::endl;
     std::cout << "merge sort eff: " << mergeSort.GetEff() << std::endl;
+    std::cout << "insert eff: " << mergeSort.GetEff() << std::endl;
     cout << "Enter any button";
     char key;
     cin >> key;
 }
 
-void Model::CreateTables(int size, int border)
+void Model::CreateTables(int size, int count, int border)
 {
     if (size != tablesSize)
     {
@@ -118,7 +129,7 @@ void Model::CreateTables(int size, int border)
     else Clear();
     errCount = 0;
     int r;
-    InsertMany(size, border);
+    InsertMany(count, border);
 }
 
 void Model::FilesUpdate()
@@ -150,6 +161,7 @@ Model::Model(int size) : tableCount(4)
 {
     errCount = 0;
     tablesSize = size;
+    tablesItems = 0;
     tables = new TTable<int, int>* [tableCount];
     tables[0] = new TScanTable<int, int>(tablesSize);
     tables[1] = new TSortTable<int, int>(tablesSize);
@@ -162,15 +174,15 @@ void Model::Run()
     char key = 'a';
     while (key != 'q') {
         cin >> key;
-        int number1, number2;
+        int number1, number2, number3;
         switch (key)
         {
         case '1':
-            cin >> number1 >> number2;
-            if (number1 < 1 || number2 < 1) Update("Only positive numbers");
+            cin >> number1 >> number2 >> number3;
+            if (number1 < 1 || number2 < 1 || number3 < 1) Update("Only positive numbers");
             else
             {
-                CreateTables(number1, number2);
+                CreateTables(number1, number2, number3);
                 Update("Created");
             }
             break;
@@ -213,8 +225,11 @@ void Model::Run()
             {
                 try
                 {
-                    Find(number1);
-                    Update("Scanned");
+                    if (Find(number1))
+                    {
+                        Update("Founded");
+                    }
+                    else Update("Isnt founded");
                 }
                 catch (...)
                 {

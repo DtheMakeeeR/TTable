@@ -132,6 +132,7 @@
     <ClInclude Include="ListHashTable.h" />
     <ClInclude Include="Record.h" />
     <ClInclude Include="TArrayTable.h" />
+    <ClInclude Include="TBalanceTreeTable.h" />
     <ClInclude Include="TreeTable.h" />
     <ClInclude Include="TScanTable.h" />
     <ClInclude Include="TSortTable.h" />
