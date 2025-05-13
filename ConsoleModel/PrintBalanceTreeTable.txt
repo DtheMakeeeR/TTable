@@ -1,8 +1,6 @@
-0 level: 10
- 1 level: 50
-  2 level: 60
-  2 level: 45
-   3 level: 44
-    4 level: 43
-     5 level: 42
- 1 level: 2
+0 level: 12
+ 1 level: 13
+  2 level: 14
+ 1 level: 10
+  2 level: 11
+  2 level: 9

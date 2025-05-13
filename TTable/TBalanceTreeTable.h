@@ -14,6 +14,7 @@ protected:
     int RemoveMin(TreeNode<TKey, TVal>*& pNode);
 public:
     void Insert(Record<TKey, TVal> rec);
+    void Insert(TKey key, TVal val);
     void Delete(TKey key);
 };
 template <typename TKey, typename TVal>
@@ -230,6 +231,16 @@ void TBalanceTreeTable<TKey, TVal>::Insert(Record<TKey, TVal> rec)
     if (Find(rec.key)) {
         throw - 1;
     }
+    InsBalTree(pRoot, rec);
+}
+
+template<typename TKey, typename TVal>
+void TBalanceTreeTable<TKey, TVal>::Insert(TKey key, TVal val)
+{
+    if (Find(key)) {
+        throw - 1;
+    }
+	Record<TKey, TVal> rec(key, val);
     InsBalTree(pRoot, rec);
 }
 
