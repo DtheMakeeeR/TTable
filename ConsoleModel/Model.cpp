@@ -59,12 +59,15 @@ void Model::Clear()
     {
         tables[i]->Clear();
     }
+	tablesItems = 0;
 }
 
 void Model::InsertMany(int count, int border)
 {
-    int r;
-    while(tablesItems < border && tablesItems < count)
+    int r, needToInsert = count;
+	if (count > tablesSize - tablesItems) needToInsert = tablesSize - tablesItems;
+	if (needToInsert > border) needToInsert = border;
+    while(needToInsert > 0)
     {
         r = Random(border);
         try
@@ -75,6 +78,7 @@ void Model::InsertMany(int count, int border)
         {
             errCount++;
         }
+		needToInsert--;
     }
 }
 
@@ -121,14 +125,18 @@ void Model::CreateTables(int size, int count, int border)
         delete tables[1];
         delete tables[2];
         delete tables[3];
+		delete tables[4];
+		delete tables[5];
         tables[0] = new TScanTable<int, int>(tablesSize);
         tables[1] = new TSortTable<int, int>(tablesSize);
         tables[2] = new ArrayHashTable<int, int>(tablesSize);
         tables[3] = new ListHashTable<int, int>(tablesSize);
+		tables[4] = new TreeTable<int, int>();
+		tables[5] = new TBalanceTreeTable<int, int>();
+		tablesItems = 0;
     }
     else Clear();
     errCount = 0;
-    int r;
     InsertMany(count, border);
 }
 
@@ -139,6 +147,8 @@ void Model::FilesUpdate()
     paths.push_back("SortTable.txt");
     paths.push_back("ListHashTable.txt");
     paths.push_back("ArrayHashTable.txt");
+	paths.push_back("TreeTable.txt");
+	paths.push_back("BalanceTreeTable.txt");
     for (size_t i = 0; i < paths.size(); i++)
     {
         ofstream out;
@@ -149,6 +159,24 @@ void Model::FilesUpdate()
         }
         out.close();
     }
+    {
+        ofstream out;
+        out.open("PrintTreeTable.txt");
+		if (out.is_open())
+		{
+			TreeTable<int, int>* tree = dynamic_cast<TreeTable<int, int>*>(tables[4]);
+			tree->PrintTree(out);
+		}
+	}
+    {
+        ofstream out;
+        out.open("PrintBalanceTreeTable.txt");
+        if (out.is_open())
+        {
+            TBalanceTreeTable<int, int>* tree = dynamic_cast<TBalanceTreeTable<int, int>*>(tables[5]);
+            tree->PrintTree(out);
+        }
+    }
 }
 
 int Model::Random(int border)
@@ -157,7 +185,7 @@ int Model::Random(int border)
 }
 
 
-Model::Model(int size) : tableCount(4)
+Model::Model(int size)
 {
     errCount = 0;
     tablesSize = size;
@@ -167,6 +195,8 @@ Model::Model(int size) : tableCount(4)
     tables[1] = new TSortTable<int, int>(tablesSize);
     tables[2] = new ArrayHashTable<int, int>(tablesSize);
     tables[3] = new ListHashTable<int, int>(tablesSize);
+	tables[4] = new TreeTable<int, int>();
+    tables[5] = new TBalanceTreeTable<int, int>();
 }
 void Model::Run()
 {

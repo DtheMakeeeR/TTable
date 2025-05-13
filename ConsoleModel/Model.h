@@ -7,9 +7,11 @@
 #include "../TTable/ListHashTable.h"
 #include "../TTable/TSortTable.h"
 #include "../TTable/TArrayTable.h"
+#include "../TTable/TreeTable.h"
+#include "../TTable/TBalanceTreeTable.h"
+#define tableCount 6
 class Model
 {
-	int tableCount;
 	int tablesSize;
 	int tablesItems;
 	int errCount;
