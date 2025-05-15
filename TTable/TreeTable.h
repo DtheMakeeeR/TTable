@@ -22,6 +22,7 @@ class TreeTable : public TTable<TKey, TVal>
 protected:
 	TreeNode<TKey, TVal>* pRoot, * pCurr, * pPrev;
 	std::stack<TreeNode<TKey, TVal>*> st;
+    void DelNode(TreeNode<TKey, TVal>* node);
 public:
 	TreeTable() : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr), pos(0), level(0) {};
 
@@ -43,7 +44,21 @@ public:
 
     void PrintRec(ostream& os, TreeNode<TKey, TVal>* p);
     void PrintTree(ostream& os);
+
+    ~TreeTable()
+    {
+        DelNode(pRoot);
+    }
 };
+
+template<class TKey, class TVal>
+void TreeTable<TKey, TVal>::DelNode(TreeNode<TKey, TVal>* node)
+{
+    if (node == nullptr) return;
+    DelNode(node->pLeft);
+    DelNode(node->pRight);
+    delete node;
+}
 
 template<class TKey, class TVal>
 bool TreeTable<TKey, TVal>::Find(TKey key)
