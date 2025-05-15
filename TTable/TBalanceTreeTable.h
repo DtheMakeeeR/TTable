@@ -49,11 +49,13 @@ int TBalanceTreeTable<TKey, TVal>::BalTreeLeft(TreeNode<TKey, TVal>*& pNode, boo
     int res = H_OK;
     if (pNode->bal == BAL_RIGHT) {
         pNode->bal = BAL_OK;
-        res = H_OK;
+        if (isInsert) res = H_OK;
+        else res = H_DEC;
     }
     else if (pNode->bal == BAL_OK) {
         pNode->bal = BAL_LEFT;
-        res = H_INC;
+        if (isInsert) res = H_INC;
+        else res = H_OK;
     }
     else if (pNode->bal == BAL_LEFT) {
         TreeNode<TKey, TVal>* p1 = pNode->pLeft;
@@ -63,6 +65,7 @@ int TBalanceTreeTable<TKey, TVal>::BalTreeLeft(TreeNode<TKey, TVal>*& pNode, boo
             pNode->bal = BAL_OK;
             pNode = p1;
             pNode->bal = BAL_OK;
+            if (!isInsert) res = H_DEC;
         }
         else {
             TreeNode<TKey, TVal>* p2 = p1->pRight;
@@ -84,7 +87,8 @@ int TBalanceTreeTable<TKey, TVal>::BalTreeLeft(TreeNode<TKey, TVal>*& pNode, boo
             }
             pNode = p2;
             pNode->bal = BAL_OK;
-            res = H_OK;
+            if (isInsert) res = H_OK;
+            else res = H_DEC;
         }
     }
     return res;
@@ -96,11 +100,13 @@ inline int TBalanceTreeTable<TKey, TVal>::BalTreeRight(TreeNode<TKey, TVal>*& pN
     int res = H_OK;
     if (pNode->bal == BAL_LEFT) {
         pNode->bal = BAL_OK;
-        res = H_OK;
+        if (isInsert) res = H_OK;
+        else res = H_DEC;
     }
     else if (pNode->bal == BAL_OK) {
         pNode->bal = BAL_RIGHT;
-        res = H_INC;
+        if (isInsert) res = H_INC;
+        else res = H_OK;
     }
     else if (pNode->bal == BAL_RIGHT) {
         TreeNode<TKey, TVal>* p1 = pNode->pRight;
@@ -110,6 +116,7 @@ inline int TBalanceTreeTable<TKey, TVal>::BalTreeRight(TreeNode<TKey, TVal>*& pN
             pNode->bal = BAL_OK;
             pNode = p1;
             pNode->bal = BAL_OK;
+            if (!isInsert) res = H_DEC;
         }
         else {
             TreeNode<TKey, TVal>* p2 = p1->pLeft;
@@ -131,7 +138,7 @@ inline int TBalanceTreeTable<TKey, TVal>::BalTreeRight(TreeNode<TKey, TVal>*& pN
             }
             pNode = p2;
             pNode->bal = BAL_OK;
-            res = H_OK;
+            if (!isInsert) res = H_DEC;
         }
     }
     return res;
@@ -146,12 +153,12 @@ int TBalanceTreeTable<TKey, TVal>::DeleteRec(TreeNode<TKey, TVal>*& pNode, TKey 
     if (pNode->rec.key < key)
     {
         int tmp = DeleteRec(pNode->pRight, key);
-        if (tmp != H_OK) res = BalTreeLeft(pNode);
+        if (tmp != H_OK) res = BalTreeLeft(pNode, false);
     }
     else if (key < pNode->rec.key)
     {
         int tmp = DeleteRec(pNode->pLeft, key);
-        if (tmp != H_OK) res = BalTreeRight(pNode);
+        if (tmp != H_OK) res = BalTreeRight(pNode, false);
     }
     else
     {
