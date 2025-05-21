@@ -43,7 +43,7 @@ int TBalanceTreeTable<TKey, TVal>:: InsBalTree(TreeNode<TKey, TVal>*& pNode, Rec
     return res;
 }
 
-template<typename TKey, typename TVal>
+template <typename TKey, typename TVal>
 int TBalanceTreeTable<TKey, TVal>::BalTreeLeft(TreeNode<TKey, TVal>*& pNode, bool isInsert)
 {
     int res = H_OK;
@@ -65,7 +65,6 @@ int TBalanceTreeTable<TKey, TVal>::BalTreeLeft(TreeNode<TKey, TVal>*& pNode, boo
             pNode->bal = BAL_OK;
             pNode = p1;
             pNode->bal = BAL_OK;
-            if (!isInsert) res = H_DEC;
         }
         else {
             TreeNode<TKey, TVal>* p2 = p1->pRight;
@@ -95,7 +94,7 @@ int TBalanceTreeTable<TKey, TVal>::BalTreeLeft(TreeNode<TKey, TVal>*& pNode, boo
 }
 
 template<typename TKey, typename TVal>
-inline int TBalanceTreeTable<TKey, TVal>::BalTreeRight(TreeNode<TKey, TVal>*& pNode, bool isInsert)
+int TBalanceTreeTable<TKey, TVal>::BalTreeRight(TreeNode<TKey, TVal>*& pNode, bool isInsert)
 {
     int res = H_OK;
     if (pNode->bal == BAL_LEFT) {
@@ -116,14 +115,13 @@ inline int TBalanceTreeTable<TKey, TVal>::BalTreeRight(TreeNode<TKey, TVal>*& pN
             pNode->bal = BAL_OK;
             pNode = p1;
             pNode->bal = BAL_OK;
-            if (!isInsert) res = H_DEC;
         }
         else {
             TreeNode<TKey, TVal>* p2 = p1->pLeft;
             p1->pLeft = p2->pRight;
             p2->pRight = p1;
             pNode->pRight = p2->pLeft;
-			p2->pLeft = pNode;
+            p2->pLeft = pNode;
             if (p2->bal == BAL_RIGHT) {
                 pNode->bal = BAL_LEFT;
             }
@@ -188,9 +186,8 @@ int TBalanceTreeTable<TKey, TVal>::DeleteRec(TreeNode<TKey, TVal>*& pNode, TKey 
             TreeNode<TKey, TVal>* tmpLeft = pNode->pLeft;
             TreeNode<TKey, TVal>* tmpRight = pNode->pRight;
             TreeNode<TKey, TVal>* pMin = FindMin(tmpRight);
-            res = RemoveMin(pNode);
             pNode->rec = pMin->rec;
-            delete pMin;
+            res = RemoveMin(tmpRight);
             pNode->pLeft = tmpLeft;
             pNode->pRight = tmpRight;
             if (res != H_OK)
@@ -221,7 +218,9 @@ int TBalanceTreeTable<TKey, TVal>::RemoveMin(TreeNode<TKey, TVal>*& pNode)
     int res = H_OK;
     if (pNode->pLeft == nullptr)
     {
+        TreeNode<TKey, TVal>* tmp = pNode;
         pNode = pNode->pRight;
+        delete tmp;
         res = H_DEC;
     }
     else

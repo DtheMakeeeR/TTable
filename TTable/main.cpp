@@ -18,15 +18,14 @@ void main() {
 	table.PrintTree(cout);*/
 	
 	TBalanceTreeTable<int, int> test100;
-	for (int i = 0; i < 20; i++) test100.Insert(i, i);
+	for (int i = 0; i < 15; i++) test100.Insert(i, i);
 	test100.PrintTree(cout);
-	for (int i = 0; i < 20; i++)
-	{
-		test100.Find(i);
-		cout << i << "  " << test100.GetEff() << endl;
-	}
-	test100.Delete(15);
-	test100.Delete(17);
-	test100.Delete(5);
+	test100.Delete(2);
+	test100.PrintTree(cout);
+	test100.Delete(3);
+	test100.PrintTree(cout);
+	test100.Delete(6);
+	test100.PrintTree(cout);
+	test100.Delete(1);
 	test100.PrintTree(cout);
 }
