@@ -8,7 +8,7 @@ protected:
 	int step, curr;
 	Record<TKey, TVal> empty, deleted;
 public:
-	ArrayHashTable(int sz = 10);
+	ArrayHashTable(int sz = 10, int st = 1);
 
 	bool IsFull() const { return dataCount == size; }
 
@@ -43,10 +43,10 @@ ArrayHashTable<TKey, TVal>& ArrayHashTable<TKey, TVal>::operator=(const ArrayHas
 	for (int i = 0; i < size; i++) pRec[i] = t.pRec[i];
 }
 template<class TKey, class TVal>
-ArrayHashTable<TKey, TVal>::ArrayHashTable(int sz) : HashTable<TKey, TVal>(sz)
+ArrayHashTable<TKey, TVal>::ArrayHashTable(int sz, int st) : HashTable<TKey, TVal>(sz), step(st)
 {
-	step = 1;
-	for (int i = 2; i * i < size; i++) {
+	
+	if (step == 1) for (int i = 2; i * i < size; i++) {
 		if (sz % i != 0) 
 		{
 			step = i;

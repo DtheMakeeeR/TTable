@@ -23,8 +23,10 @@ protected:
 	TreeNode<TKey, TVal>* pRoot, * pCurr, * pPrev;
 	std::stack<TreeNode<TKey, TVal>*> st;
     void DelNode(TreeNode<TKey, TVal>* node);
+    TreeNode<TKey, TVal>* CopyNode(TreeNode<TKey, TVal>* node);
 public:
 	TreeTable() : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr), pos(0), level(0) {};
+    TreeTable(const TreeTable<TKey, TVal>& t) : pRoot(nullptr), pCurr(nullptr), pPrev(nullptr), pos(0), dataCount(other.dataCount), level(0) { pRoot = CopyNode(t.pRoot); }
 
 	bool Find(TKey key);
 	virtual void Insert(TKey key, TVal val);
@@ -49,6 +51,20 @@ public:
     {
         DelNode(pRoot);
     }
+	TreeTable<TKey, TVal>& operator=(const TreeTable<TKey, TVal>& other)
+	{
+		if (this != &other) {
+			DelNode(pRoot);
+			pRoot = CopyNode(other.pRoot);
+			pCurr = nullptr;
+			pPrev = nullptr;
+			pos = 0;
+			level = 0;
+			this->dataCount = other.dataCount;
+			this->eff = other.eff;
+		}
+		return *this;
+	}
 };
 
 template<class TKey, class TVal>
@@ -83,7 +99,19 @@ bool TreeTable<TKey, TVal>::Find(TKey key)
     pCurr = pPrev;
     return false;
 }
+template<class TKey, class TVal>
+inline TreeNode<TKey, TVal>* TreeTable<TKey, TVal>::CopyNode(TreeNode<TKey, TVal>* node)
+{
+    if (!node) return nullptr;
 
+    TreeNode<TKey, TVal>* newNode = new TreeNode<TKey, TVal>(node->rec.key, node->rec.val);
+    newNode->bal = node->bal;
+
+    newNode->pLeft = CopyNode(node->pLeft);
+    newNode->pRight = CopyNode(node->pRight);
+
+    return newNode;
+}
 template<class TKey, class TVal>
 void TreeTable<TKey, TVal>::Insert(TKey key, TVal val)
 {
@@ -216,22 +244,28 @@ bool TreeTable<TKey, TVal>::IsFull() const
 template<class TKey, class TVal>
 void TreeTable<TKey, TVal>::Clear()
 {
-    vector < TreeNode<TKey, TVal>*> toDel;
-    int sz = dataCount, i = 0;
-    for (Reset(); i < sz; GoNext(), i++)
-    {
-        //delete pCurr;//не  работает, потому что сразу удаляет корень (´･_･｀)
-        toDel.push_back(pCurr);
-    }
-    for (i = 0; i < sz; i++)
-    {
-        delete toDel[i];
-    }
+    //vector < TreeNode<TKey, TVal>*> toDel;
+    //int sz = dataCount, i = 0;
+    //for (Reset(); i < sz; GoNext(), i++)
+    //{
+    //    //delete pCurr;//не  работает, потому что сразу удаляет корень (´･_･｀)
+    //    toDel.push_back(pCurr);
+    //}
+    //for (i = 0; i < sz; i++)
+    //{
+    //    delete toDel[i];
+    //}
+    //pCurr = nullptr;
+    //pPrev = nullptr;
+    //pRoot = nullptr;
+    //dataCount = 0;
+    //pos = 0;
+	DelNode(pRoot);
+	dataCount = 0;
+    pos = 0;
     pCurr = nullptr;
     pPrev = nullptr;
     pRoot = nullptr;
-    dataCount = 0;
-    pos = 0;
 }
 
 template<class TKey, class TVal>

@@ -64,3 +64,39 @@ TEST(TScanTable, CorrectAssign)
 	EXPECT_EQ(st1.Find(4), true);
 	EXPECT_EQ(st2.Find(4), false);
 }
+TEST(TScanTable, CanFindExistingKey)
+{
+	TScanTable<int, int> st1;
+	st1.Insert(5, 50);
+	EXPECT_EQ(st1.Find(5), true);
+}
+TEST(TScanTable, CantFindNoExistingKey)
+{
+	TScanTable<int, int> st1;
+	st1.Insert(5, 50);
+	EXPECT_EQ(st1.Find(6), false);
+}
+TEST(TScanTable, CanIterate)
+{
+	TScanTable<int, int> st1;
+	int a[5] = { 40, 2, 1, -1, 0 };
+	for (size_t i = 0; i < 5; i++)
+	{
+		st1.Insert(a[i], a[i]);
+	}
+	int i = 0;
+	for (st1.Reset(); !st1.IsEnd(); st1.GoNext())
+	{
+		EXPECT_EQ(st1.GetCurrVal(), a[i]);
+		i++;
+	}
+}
+TEST(TScanTable, CanClearTable)
+{
+	TScanTable<int, int> st1;
+	for (int i = 0; i < 5; i++)
+		st1.Insert(i, i);
+	st1.Clear();
+	EXPECT_EQ(st1.GetDataCount(), 0);
+	EXPECT_EQ(st1.IsEmpty(), true);
+}

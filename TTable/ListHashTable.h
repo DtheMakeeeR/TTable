@@ -26,6 +26,8 @@ public:
 	Record<TKey, TVal> GetCurrRec() { return *currI; }
 
 	~ListHashTable() { delete[] pList; }
+
+	ListHashTable<TKey, TVal>& operator=(const ListHashTable<TKey, TVal>& t);
 };
 
 template<class TKey, class TVal>
@@ -123,4 +125,19 @@ inline void ListHashTable<TKey, TVal>::GoNext()
 		if (currList == size) break;
 		currI = pList[currList].begin();
 	}
+}
+
+template<class TKey, class TVal>
+ListHashTable<TKey, TVal>& ListHashTable<TKey, TVal>::operator=(const ListHashTable<TKey, TVal>& t)
+{
+	if (this == &t) return *this;
+	if (size != t.size)
+	{
+		delete[] pList;
+		size = t.size;
+		pList = new list<Record<TKey, TVal>>[size];
+	}
+	for (int i = 0; i < size; i++) pList[i].assign(t.pList[i].begin(), t.pList[i].end());
+	dataCount = t.dataCount;
+	return *this;
 }

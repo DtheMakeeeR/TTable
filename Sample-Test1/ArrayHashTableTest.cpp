@@ -36,14 +36,19 @@ TEST(ArrayHashTable, CorrectInsert)
 TEST(ArrayHashTable, CorrectDelete)
 {
 	ArrayHashTable<int, int> ht1;
-	int a1[5] = { 40, 2, 1, 4, 0 };
-	int a2[4] = { 40, 1, 2, 0 };
+	int a1[5] = { 44, 5, 1, 4, 0 }; // 44 -> 4, 5 -> 4, 4 -/->4 -/-> 5 -> 6 шаг = 1
+	int a2[4] = { 0, 1, 5, 4 };
 	for (size_t i = 0; i < 5; i++)
 	{
 		ht1.Insert(a1[i], a1[i]);
 	}
-	ht1.Delete(4);
-	EXPECT_EQ(!ht1.Find(4), true);
+	ht1.Delete(44);
+	int i = 0;
+	for (ht1.Reset(); !ht1.IsEnd(); ht1.GoNext())
+	{
+		EXPECT_EQ(ht1.GetCurrVal(), a2[i]);
+		i++;
+	}
 }
 TEST(ArrayHashTable, CorrectAssign)
 {
@@ -56,4 +61,22 @@ TEST(ArrayHashTable, CorrectAssign)
 	ht2.Delete(4);
 	EXPECT_EQ(ht1.Find(4), true);
 	EXPECT_EQ(ht2.Find(4), false);
+}
+TEST(ArrayHashTable, CanFindExistingKey) {
+	ArrayHashTable<int, int> ht;
+	ht.Insert(123, 456);
+	EXPECT_EQ(ht.Find(123), true);
+}
+TEST(ArrayHashTable, CantFindNoExistingKey) {
+	ArrayHashTable<int, int> ht;
+	ht.Insert(123, 456);
+	EXPECT_EQ(ht.Find(321), false);
+}
+TEST(ArrayHashTable, CanClearTable) {
+	ArrayHashTable<int, int> ht;
+	ht.Insert(1, 2);
+	ht.Insert(2, 3);
+	ht.Clear();
+	EXPECT_EQ(ht.GetDataCount(), 0);
+	EXPECT_EQ(ht.IsEmpty(), true);
 }

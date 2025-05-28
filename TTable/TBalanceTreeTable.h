@@ -13,9 +13,17 @@ protected:
     TreeNode<TKey, TVal>* FindMin(TreeNode<TKey, TVal>* pNode);
     int RemoveMin(TreeNode<TKey, TVal>*& pNode);
 public:
+	TBalanceTreeTable() : TreeTable<TKey, TVal>() {};
+	TBalanceTreeTable(const TBalanceTreeTable<TKey, TVal>& t) : TreeTable<TKey, TVal>(t) {};
     void Insert(Record<TKey, TVal> rec);
     void Insert(TKey key, TVal val);
     void Delete(TKey key);
+	TBalanceTreeTable<TKey, TVal>& operator=(const TBalanceTreeTable<TKey, TVal>& other) {
+		if (this != &other) {
+			TreeTable<TKey, TVal>::operator=(other);
+		}
+		return *this;
+	}
 };
 template <typename TKey, typename TVal>
 int TBalanceTreeTable<TKey, TVal>:: InsBalTree(TreeNode<TKey, TVal>*& pNode, Record<TKey, TVal> rec) { //по ссылке корень тк он может измениться
@@ -253,6 +261,6 @@ void TBalanceTreeTable<TKey, TVal>::Insert(TKey key, TVal val)
 template<typename TKey, typename TVal>
 void TBalanceTreeTable<TKey, TVal>::Delete(TKey key)
 {
-    if (IsEmpty()) return;
+    if (IsEmpty()) throw -1;
     DeleteRec(pRoot, key);
 }

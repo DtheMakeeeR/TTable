@@ -101,7 +101,10 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArrayHashTable.cpp" />
+    <ClCompile Include="ArrayHashTableTest.cpp" />
+    <ClCompile Include="ListHashTableTest.cpp" />
+    <ClCompile Include="TBalanceTreeTableTest.cpp" />
+    <ClCompile Include="TreeTableTest.cpp" />
     <ClCompile Include="TScanTableTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

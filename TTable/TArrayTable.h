@@ -16,7 +16,7 @@ public:
 	void Clear() { dataCount = 0; }
 
 	bool IsFull() const { return dataCount == size; }
-	bool IsEmpty() { return size == 0; }
+	bool IsEmpty() { return dataCount == 0; }
 	void Reset() { curr = 0; };
 	void GoNext() { curr++; };
 	bool IsEnd() { return curr == dataCount; }
