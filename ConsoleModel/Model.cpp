@@ -11,6 +11,8 @@ void Model::Update(string message)
     cout << "SortTable: " << tables[1]->GetEff() << endl;
     cout << "ArrayHashTable: " << tables[2]->GetEff() << endl;
     cout << "ListHashTable: " << tables[3]->GetEff() << endl;
+    cout << "TreeTable: " << tables[4]->GetEff() << endl;
+    cout << "BalanceTreeTable: " << tables[5]->GetEff() << endl;
     cout << "Choose operation:" << endl;
     cout << "1: Create tables(size, count, border)" << endl;
     cout << "2: Insert item" << endl;

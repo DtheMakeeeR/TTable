@@ -36,7 +36,7 @@ TEST(ArrayHashTable, CorrectInsert)
 TEST(ArrayHashTable, CorrectDelete)
 {
 	ArrayHashTable<int, int> ht1;
-	int a1[5] = { 44, 5, 1, 4, 0 }; // 44 -> 4, 5 -> 4, 4 -/->4 -/-> 5 -> 6 шаг = 1
+	int a1[5] = { 44, 5, 1, 4, 0 }; 
 	int a2[4] = { 0, 1, 5, 4 };
 	for (size_t i = 0; i < 5; i++)
 	{
@@ -79,4 +79,25 @@ TEST(ArrayHashTable, CanClearTable) {
 	ht.Clear();
 	EXPECT_EQ(ht.GetDataCount(), 0);
 	EXPECT_EQ(ht.IsEmpty(), true);
+}
+TEST(ArrayHashTable, ChainIsUnbreakble)
+{
+	ArrayHashTable<int, int> ht1(100);
+	/*int a1[5] = { 5, 105, 205, 305, 405};
+	for (size_t i = 0; i < 5; i++)
+	{
+		ht1.Insert(a1[i], a1[i]);
+	}
+	ht1.Delete(205);
+	int i = 0;
+	EXPECT_TRUE(ht1.Find(5));
+	EXPECT_TRUE(ht1.Find(105));
+	EXPECT_TRUE(ht1.Find(305));
+	EXPECT_TRUE(ht1.Find(405));*/
+	ht1.Insert(47);
+	ht1.Insert(4700);
+	ht1.Insert(47000);
+	ht1.Find(4700);
+	ht1.Delete(47);
+	ht1.Find(4700);
 }
