@@ -1,6 +1,6 @@
 #include "Model.h"
 
-void Model::Update(string message)
+void Model::Update(string message, bool color)
 {
     system("cls");
     cout << "Tables sizes: " << tablesSize << endl;
@@ -23,7 +23,9 @@ void Model::Update(string message)
     cout << "7: Check sorts(size, border)" << endl;
     cout << "q: Quit" << endl;
     if (message != "") {
+        if (color)
         cout << "\033[31m" << message << "\033[0m" << endl;
+        else cout << "\033[32m" << message << "\033[0m" << endl;
     }
 }
 
@@ -215,7 +217,7 @@ void Model::Run()
             else
             {
                 CreateTables(number1, number2, number3);
-                Update("Created");
+                Update("Created", false);
             }
             break;
         case '2':
@@ -226,7 +228,7 @@ void Model::Run()
                 try
                 {
                     Insert(number1, number2);
-                    Update("Inserted");
+                    Update("Inserted", false);
                 }
                 catch (...)
                 {
@@ -242,7 +244,7 @@ void Model::Run()
                 try
                 {
                     Delete(number1);
-                    Update("Deleted");
+                    Update("Deleted", false);
                 }
                 catch (...)
                 {
@@ -259,9 +261,9 @@ void Model::Run()
                 {
                     if (Find(number1))
                     {
-                        Update("Founded");
+                        Update("True", false);
                     }
-                    else Update("Isnt founded");
+                    else Update("False");
                 }
                 catch (...)
                 {
@@ -275,7 +277,7 @@ void Model::Run()
             else
             {
                 InsertMany(number1, number2);
-                Update("Inserted");
+                Update("Inserted", false);
             }
             break;
         case '6':
@@ -288,7 +290,7 @@ void Model::Run()
             else
             {
                 CheckSorts(number1, number2);
-                Update("Checked");
+                Update("Checked", false);
             }
             break;
         case 'q':

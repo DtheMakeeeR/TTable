@@ -55,7 +55,7 @@ template<class TKey, class TVal>
 void TScanTable<TKey, TVal>::Delete(TKey k)
 {
 	if (!Find(k)) throw - 1;
-	pRec[this->curr] = pRec[(this->dataCount)--];
+	pRec[this->curr] = pRec[(this->dataCount-1)];
 	dataCount--;
 	eff++;
 }

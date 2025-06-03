@@ -16,7 +16,7 @@ class Model
 	int tablesItems;
 	int errCount;
 	TTable<int, int>** tables; 
-	void Update(string message = "");
+	void Update(string message = "", bool color = true);
 	void Insert(int key, int val);
 	bool Find(int key);
 	void Delete(int key);
