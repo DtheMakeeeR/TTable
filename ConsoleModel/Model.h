@@ -27,7 +27,7 @@ class Model
 	int Random(int border);
 	void CheckSorts(int size, int border);
 public:
-	Model(int size = 10);
+	Model(int size = 100);
 	void Run();
 
 	~Model();

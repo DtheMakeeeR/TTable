@@ -83,7 +83,7 @@ TEST(ArrayHashTable, CanClearTable) {
 TEST(ArrayHashTable, ChainIsUnbreakble)
 {
 	ArrayHashTable<int, int> ht1(100);
-	/*int a1[5] = { 5, 105, 205, 305, 405};
+	int a1[5] = { 5, 105, 205, 305, 405 };
 	for (size_t i = 0; i < 5; i++)
 	{
 		ht1.Insert(a1[i], a1[i]);
@@ -93,11 +93,5 @@ TEST(ArrayHashTable, ChainIsUnbreakble)
 	EXPECT_TRUE(ht1.Find(5));
 	EXPECT_TRUE(ht1.Find(105));
 	EXPECT_TRUE(ht1.Find(305));
-	EXPECT_TRUE(ht1.Find(405));*/
-	ht1.Insert(47);
-	ht1.Insert(4700);
-	ht1.Insert(47000);
-	ht1.Find(4700);
-	ht1.Delete(47);
-	ht1.Find(4700);
+	EXPECT_TRUE(ht1.Find(405));
 }

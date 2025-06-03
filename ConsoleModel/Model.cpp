@@ -7,12 +7,12 @@ void Model::Update(string message, bool color)
     cout << "Items in tables: " << tablesItems << endl;
     cout << "Errors: " << errCount << endl;
     cout << "Efficiencies: " << endl;
-    cout << "ScanTable: " << tables[0]->GetEff() << endl;
-    cout << "SortTable: " << tables[1]->GetEff() << endl;
-    cout << "ArrayHashTable: " << tables[2]->GetEff() << endl;
-    cout << "ListHashTable: " << tables[3]->GetEff() << endl;
-    cout << "TreeTable: " << tables[4]->GetEff() << endl;
-    cout << "BalanceTreeTable: " << tables[5]->GetEff() << endl;
+    cout << "ScanTable: " << endl << tables[0]->GetEff() << endl;
+    cout << "SortTable: " << endl << tables[1]->GetEff() << endl;
+    cout << "ArrayHashTable: " << endl << tables[2]->GetEff() << endl;
+    cout << "ListHashTable: " << endl << tables[3]->GetEff() << endl;
+    cout << "TreeTable: " << endl << tables[4]->GetEff() << endl;
+    cout << "BalanceTreeTable: " << endl << tables[5]->GetEff() << endl;
     cout << "Choose operation:" << endl;
     cout << "1: Create tables(size, count, border)" << endl;
     cout << "2: Insert item" << endl;
@@ -21,6 +21,8 @@ void Model::Update(string message, bool color)
     cout << "5: Insert MANY(count, border)" << endl;
     cout << "6: Clear tables" << endl;
     cout << "7: Check sorts(size, border)" << endl;
+    cout << "8: Insert many (start, end)" << endl;
+    cout << "9: HashArray test (count)" << endl;
     cout << "q: Quit" << endl;
     if (message != "") {
         if (color)
@@ -291,6 +293,41 @@ void Model::Run()
             {
                 CheckSorts(number1, number2);
                 Update("Checked", false);
+            }
+            break;
+        case '8':
+            cin >> number1 >> number2;
+            if (number1 < 1 || number2 < 1) Update("Only positive numbers");
+            else
+            {
+                for (int i = number1; i < number2; i++)
+                {
+                    try{
+                        Insert(i, i);
+                    }
+                    catch (...)
+                    {
+                        errCount++;
+                    }
+                }
+                Update("Done", false);
+            }
+            break;
+        case '9':
+            cin >> number1;
+            if (number1 < 1) Update("Only positive numbers");
+            else {
+                for (int i = 0; i < number1; i++)
+                {
+                    try {
+                        Insert(i * tablesSize, i * tablesSize);
+                    }
+                    catch (...)
+                    {
+                        errCount++;
+                    }
+                }
+                Update("Done", false);
             }
             break;
         case 'q':

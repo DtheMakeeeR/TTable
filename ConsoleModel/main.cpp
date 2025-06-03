@@ -3,6 +3,6 @@
 int main()
 {
     srand(time(NULL));
-    Model m;
+    Model m(100);
     m.Run();
 }
