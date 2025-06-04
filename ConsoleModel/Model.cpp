@@ -223,13 +223,13 @@ void Model::Run()
             }
             break;
         case '2':
-            cin >> number1 >> number2;
-            if (number1 < 1 || number2 < 1) Update("Only positive numbers");
+            cin >> number1;
+            if (number1 < 0) Update("Only positive numbers");
             else
             {
                 try
                 {
-                    Insert(number1, number2);
+                    Insert(number1, number1);
                     Update("Inserted", false);
                 }
                 catch (...)
@@ -240,7 +240,7 @@ void Model::Run()
             break;
         case '3':
             cin >> number1;
-            if (number1 < 1) Update("Only positive numbers");
+            if (number1 < 0) Update("Only positive numbers");
             else
             {
                 try
@@ -256,7 +256,7 @@ void Model::Run()
             break;
         case '4':
             cin >> number1;
-            if (number1 < 1) Update("Only positive numbers");
+            if (number1 < 0) Update("Only positive numbers");
             else
             {
                 try
